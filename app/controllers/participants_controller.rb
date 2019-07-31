@@ -1,0 +1,56 @@
+class ParticipantsController < ApplicationController
+    acts_as_token_authentication_handler_for User
+
+    def create
+        participant = Participant.new(participant_params)
+        request = Request.find(params[:id_request])
+
+        if(request.required_people == 1)
+            request.update_attribute(:status, "closed")
+            HardWorker.perform_in(24.hours, request)
+        end
+
+        request.update_attribute(:required_people, request.required_people - 1)
+        
+
+        if(participant.save)
+            render json: {
+                status: 'SUCCESS',
+                message: 'Participant link created',
+                data: participant
+            }, status: :created
+        else 
+            render json: {
+                status: 'ERROR',
+                message: 'Participant link not created',
+                data: participant.errors
+            }, status: :unprocessable_entity
+        end
+    end
+
+    def show
+        participants = Participant.where(id_request: params[:id])
+        render json: {
+            status: 'SUCCESS',
+            message: 'Participants fetched',
+            data: participants
+        }, status: :ok
+    end
+
+    def destroy
+        participant = Participant.where(id_request: params[:id_request], user_id: params[:user_id]).first
+        request = Request.find(params[:id_request])
+
+        if(request.required_people == 0)
+            request.update_attribute(:status, "open")
+        end
+
+        request.update_attribute(:required_people, request.required_people + 1)
+
+        participant.destroy
+    end
+
+    private def participant_params
+        params.permit(:id_request, :user_id)
+    end
+end
