@@ -7,7 +7,7 @@ class ParticipantsController < ApplicationController
 
         if(request.required_people == 1)
             request.update_attribute(:status, "closed")
-            HardWorker.perform_in(24.hours, request)
+            HardWorker.perform_in(24.hours, :id_request)
         end
 
         request.update_attribute(:required_people, request.required_people - 1)

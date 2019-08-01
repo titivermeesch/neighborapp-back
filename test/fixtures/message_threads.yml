@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  thread_owner: MyString
-
-two:
-  thread_owner: MyString
+    thread_owner: titivermeesch@gmail.com
+    title: Building a chair
+    id_request: 7
