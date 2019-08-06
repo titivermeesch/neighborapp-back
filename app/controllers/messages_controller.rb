@@ -28,6 +28,6 @@ class MessagesController < ApplicationController
     end
 
     private def message_params
-        params.permit(:thread_id, :message_author, :content)
+        params.permit(:thread_id, :message_author, :content, :date)
     end
 end
