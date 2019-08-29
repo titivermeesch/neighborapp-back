@@ -20,11 +20,6 @@ class ParticipantsController < ApplicationController
                 data: participant
             }, status: :created
 
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
             m = Message.new()
             m.thread_id = MessageThread.where(id_request: participant.id_request).first.id_request
             m.message_author = participant.user_id
@@ -32,11 +27,6 @@ class ParticipantsController < ApplicationController
             m.date = Time.now
             m.message_type = "alert"
             m.save
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
-            puts "-------------------------"
         else 
             render json: {
                 status: 'ERROR',
