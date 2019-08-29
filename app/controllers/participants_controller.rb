@@ -26,7 +26,7 @@ class ParticipantsController < ApplicationController
             puts "-------------------------"
             puts "-------------------------"
             m = Message.new()
-            m.thread_id = MessageThread.where(id_request: participant.id_request).first
+            m.thread_id = MessageThread.where(id_request: participant.id_request).first.id_request
             m.message_author = participant.user_id
             m.content = participant.user_id + " is now participating"
             m.date = Time.now
