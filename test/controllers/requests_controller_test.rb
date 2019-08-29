@@ -53,4 +53,9 @@ class RequestsControllerTest < ActionDispatch::IntegrationTest
     request = Request.new(user_id:1, request_type: 'normal', description: 'My description', date: '12-08-2019', required_people: 4, x: 49.578, y: 41.367, status: 'open')
     assert_not request.save, 'Tried to save with missing title'
   end
+
+  test "should not save request with too long description" do
+    request = Request.new(user_id:1, request_type: 'normal', description: 'My descriptioiptiondescriptidescriptscriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription', date: '12-08-2019', required_people: 4, x: 49.578, y: 41.367, status: 'open', title: 'Building a chair')
+    assert_not request.save, 'Tried to save with too long description'
+  end
 end

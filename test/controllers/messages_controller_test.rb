@@ -20,4 +20,9 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     message = Message.new(thread_id: 8, message_author: 'test@gmail.com', date: '12-08-2019')
     assert_not message.save, 'Tried to save with missing content'
   end
-end
+
+  test "should not save message with too long content" do
+    message = Message.new(thread_id: 8, message_author: 'test@gmail.com', date: '12-08-2019', content: 'this is my messagemessmessagemessagemessagemessagemessageagemessagemessagemessagemessagemessagemessagemmessagemessagemessagmessagemessagemessagemessageemessagemessageessagemessagemessage')
+    assert_not message.save, 'Tried to save with too long content'
+  end
+end 
