@@ -19,6 +19,14 @@ class ParticipantsController < ApplicationController
                 message: 'Participant link created',
                 data: participant
             }, status: :created
+
+            m = Message.new()
+            m.thread_id = MessageThread.where(id_request: participant.id_request).first
+            m.message_author = participant.user_id
+            m.content = participant.user_id + " is now participating"
+            m.date = Time.now
+            m.type = "alert"
+            m.save
         else 
             render json: {
                 status: 'ERROR',
