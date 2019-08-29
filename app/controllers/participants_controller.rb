@@ -30,7 +30,7 @@ class ParticipantsController < ApplicationController
             m.message_author = participant.user_id
             m.content = participant.user_id + " is now participating"
             m.date = Time.now
-            m.type = "alert"
+            m.message_type = "alert"
             m.save
             puts "-------------------------"
             puts "-------------------------"
